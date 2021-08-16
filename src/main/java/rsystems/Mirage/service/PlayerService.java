@@ -19,4 +19,8 @@ public interface PlayerService {
     Player getPlayer(String characterName);
     List<Player> getPlayersByUID(Long uid);
     List<Player> getPlayers();
+
+    // Deletion
+    void deletePlayerByName(String characterName);
+    void deletePlayerById(Long id);
 }

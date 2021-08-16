@@ -7,4 +7,7 @@ public interface PlayerRepo extends JpaRepository<Player, Long> {
 
     Player findByCharacterName(String characterName);
     Player findPlayerById(Long id);
+
+    void deleteByCharacterName(String characterName);
+    void deleteById(Long id);
 }
