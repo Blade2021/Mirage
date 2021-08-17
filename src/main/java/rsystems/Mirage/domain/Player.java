@@ -30,7 +30,7 @@ public class Player {
     private String characterClass;
     private String characterSpec;
     private int characterItemLevel;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
 }

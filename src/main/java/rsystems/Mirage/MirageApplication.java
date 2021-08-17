@@ -13,7 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import rsystems.Mirage.domain.Player;
 import rsystems.Mirage.domain.Role;
+import rsystems.Mirage.objects.Dispatcher;
 import rsystems.Mirage.service.PlayerService;
+import rsystems.Mirage.service.PlayerServiceImpl;
 
 import javax.security.auth.login.LoginException;
 
@@ -22,6 +24,8 @@ public class MirageApplication {
 
 	public static String prefix = Config.get("prefix");
 	public static JDAImpl jda = null;
+	public static PlayerService playerService;
+	public static Dispatcher dispatcher;
 
 	public static void main(String[] args) throws LoginException {
 		SpringApplication.run(MirageApplication.class, args);
@@ -39,6 +43,8 @@ public class MirageApplication {
 			api.awaitReady();
 			jda = (JDAImpl) api;
 
+			api.addEventListener(dispatcher = new Dispatcher());
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -48,6 +54,9 @@ public class MirageApplication {
 
 	@Bean
 	CommandLineRunner run(PlayerService playerService){
+
+		MirageApplication.playerService = playerService;
+
 		return args -> {
 		};
 
