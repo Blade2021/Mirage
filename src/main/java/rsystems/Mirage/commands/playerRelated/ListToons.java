@@ -1,6 +1,5 @@
 package rsystems.Mirage.commands.playerRelated;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -40,35 +39,35 @@ public class ListToons extends Command {
         for(Player player:players){
             index++;
 
-            String name = null;
+            String name;
             if(player.getCharacterName().length()>characterNameSize){
                 name = player.getCharacterName().substring(0,characterNameSize-1);
             } else {
                 name = String.format("%" + (-characterNameSize) + "s",player.getCharacterName());
             }
 
-            String realm = null;
+            String realm;
             if(player.getRealmName().length()>characterRealmSize){
                 realm = player.getRealmName().substring(0,characterRealmSize-1);
             } else {
                 realm = String.format("%" + (-characterRealmSize) + "s",player.getRealmName());
             }
 
-            String itemLevelString = null;
+            String itemLevelString;
             if(player.getCharacterItemLevel().toString().length()>characterItemLevelSize){
                 itemLevelString = player.getRealmName().substring(0,characterItemLevelSize-1);
             } else {
                 itemLevelString = String.format("%" + (-characterItemLevelSize) + "s",player.getCharacterItemLevel().toString());
             }
 
-            String playerClass= null;
+            String playerClass;
             if(player.getPlayerClass().length()>characterClassSize){
                 playerClass = player.getPlayerClass().substring(0,characterClassSize-1);
             } else {
                 playerClass = String.format("%" + (-characterClassSize) + "s",player.getPlayerClass());
             }
 
-            String playerSpec = null;
+            String playerSpec;
             if(player.getCurrentSpecName().length()>characterSpecSize){
                 playerSpec = player.getCurrentSpecName().substring(0,characterSpecSize-1);
             } else {

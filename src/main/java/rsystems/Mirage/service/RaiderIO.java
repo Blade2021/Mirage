@@ -59,10 +59,6 @@ public class RaiderIO {
                         player.setThumbnailURL(IOResponse.getThumbnailUrl());
 
                         MirageApplication.playerService.savePlayer(player);
-
-                        //System.out.println(responseObject(response.body()));
-
-                        //return responseObject(response.body());
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }

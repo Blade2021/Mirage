@@ -21,7 +21,7 @@ public class AddRole extends Command {
         String[] args = content.split("\\s+");
         if(args.length >= 2) {
 
-            Player player = null;
+            Player player;
             player = MirageApplication.playerService.getPlayer(args[0]);
 
             if(player.getDUID().equals(sender.getIdLong())){

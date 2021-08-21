@@ -17,15 +17,11 @@ public class RemovePlayer extends Command {
 
     @Override
     public void dispatch(User sender, MessageChannel channel, Message message, String content, GuildMessageReceivedEvent event) {
-        Player player = null;
+        Player player;
         player = MirageApplication.playerService.getPlayer(content);
 
         if(player != null){
-            boolean authorized = false;
-
-            if(player.getDUID().equals(sender.getIdLong())){
-                authorized = true;
-            }
+            boolean authorized = player.getDUID().equals(sender.getIdLong());
 
             if(authorized){
                 MirageApplication.playerService.deletePlayerById(player.getId());
