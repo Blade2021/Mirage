@@ -53,7 +53,7 @@ public class GrabPlayer extends Command {
                     sb.append(role.getName()).append("\n");
                 }
 
-                eb.addField("Role(s)",sb.toString(),false)
+                eb.addField("Role(s)",sb.toString(),true)
                 .setThumbnail(player.getThumbnailURL());
 
         switch(player.getPlayerClass().toLowerCase()){

@@ -28,12 +28,13 @@ public class ListToons extends Command {
         int characterRealmSize = 12;
         int characterClassSize = 12;
         int characterSpecSize = 15;
-        int characterRoles = 12;
+        int characterRolesSize = 12;
+        int characterItemLevelSize = 4;
 
         sb.append("```add").append("\n");
         sb.append("|     M I R A G E      |").append("\n");
-        sb.append("|# | Character     | Realm      | Class      | Spec          | Role(s)    ").append("\n");
-        sb.append("| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |").append("\n");
+        sb.append("|# | Character     | Realm      | iLVL| Class       | Spec           | Role(s)    ").append("\n");
+        sb.append("| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - |").append("\n");
 
         List<Player> players = MirageApplication.playerService.getPlayersByUID(sender.getIdLong());
         for(Player player:players){
@@ -51,6 +52,13 @@ public class ListToons extends Command {
                 realm = player.getRealmName().substring(0,characterRealmSize-1);
             } else {
                 realm = String.format("%" + (-characterRealmSize) + "s",player.getRealmName());
+            }
+
+            String itemLevelString = null;
+            if(player.getCharacterItemLevel().toString().length()>characterItemLevelSize){
+                itemLevelString = player.getRealmName().substring(0,characterItemLevelSize-1);
+            } else {
+                itemLevelString = String.format("%" + (-characterItemLevelSize) + "s",player.getCharacterItemLevel().toString());
             }
 
             String playerClass= null;
@@ -73,10 +81,10 @@ public class ListToons extends Command {
                 for (Role role : player.getRoles()) {
                     playerRoles.append(role.getName()).append(" ");
                 }
-                if (playerRoles.toString().length() > characterRoles) {
-                    playerRolesFinal = playerRoles.substring(0, characterRoles - 1);
+                if (playerRoles.toString().length() > characterRolesSize) {
+                    playerRolesFinal = playerRoles.substring(0, characterRolesSize - 1);
                 } else {
-                    playerRolesFinal = String.format("%" + (-characterRoles) + "s", playerRoles);
+                    playerRolesFinal = String.format("%" + (-characterRolesSize) + "s", playerRoles);
                 }
             }
 
@@ -84,9 +92,10 @@ public class ListToons extends Command {
             sb.append("|").append(name);
 
             sb.append("|").append(realm);
+            sb.append("| ").append(itemLevelString);
 
-            sb.append("|").append(playerClass);
-            sb.append("|").append(playerSpec).append("|");
+            sb.append("| ").append(playerClass);
+            sb.append("| ").append(playerSpec).append("|");
             if(playerRolesFinal != null) {
                 sb.append(playerRolesFinal);
             }
