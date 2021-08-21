@@ -14,7 +14,7 @@ public class RaiderIO {
 
     public static void requestInfo(String characterName, String realm, Long uid) {
 
-        String uri = String.format("https://raider.io/api/v1/characters/profile?region=us&realm=%s&name=%s&fields=covenant,guild", realm, characterName);
+        String uri = String.format("https://raider.io/api/v1/characters/profile?region=us&realm=%s&name=%s&fields=covenant,guild,gear", realm, characterName);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -29,8 +29,9 @@ public class RaiderIO {
                     try {
 
                         RaiderIOResponse IOResponse = responseObject(response.body());
+                        System.out.println(IOResponse.getGear().toString());
 
-                        System.out.println(IOResponse.getGear().getItemLevelEquipped());
+                        //System.out.println(IOResponse.getGear().getItemLevelEquipped());
 
                         Player player;
                         if(MirageApplication.playerService.getPlayer(IOResponse.getName()) == null) {
@@ -50,7 +51,7 @@ public class RaiderIO {
 
                         //System.out.println("iLVL = " + IOResponse.getGear().getItemLevelEquipped());
 
-                        player.setCharacterItemLevel(0);
+                        player.setCharacterItemLevel(IOResponse.getGear().getItemLevelEquipped());
                         player.setCurrentSpecName(IOResponse.getActiveSpecName());
                         player.setRegion(IOResponse.getRegion());
                         player.setRace(IOResponse.getRace());
