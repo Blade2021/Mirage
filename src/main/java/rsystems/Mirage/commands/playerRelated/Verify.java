@@ -35,4 +35,9 @@ public class Verify extends Command {
     public String getHelp() {
         return null;
     }
+
+    @Override
+    public Integer getRequiredArgSize() {
+        return 1;
+    }
 }

@@ -10,7 +10,6 @@ import rsystems.Mirage.service.RaiderIO;
 
 public class Register extends Command {
 
-
     @Override
     public void dispatch(User sender, MessageChannel channel, Message message, String content, PrivateMessageReceivedEvent event) {
 
@@ -19,20 +18,25 @@ public class Register extends Command {
     @Override
     public void dispatch(User sender, MessageChannel channel, Message message, String content, GuildMessageReceivedEvent event) {
         String[] args = content.split("\\s+");
-        if(args.length >= 2){
-            RaiderIO.requestInfo(args[0],args[1],sender.getIdLong());
-            reply(event,"I've added your character to the queue.  Please wait a moment before trying to pull character data.");
-        }
+        RaiderIO.requestInfo(args[0],args[1],sender.getIdLong());
+        reply(event,"I've added your character to the queue.  Please wait a moment before trying to pull character data.");
+
     }
 
     @Override
     public String getHelp() {
-        return null;
+        return "`{prefix}{command} [Character Name] [Realm Name]`\n" +
+                "Register a character to the BoT with YOUR discord ID.";
+    }
+
+    @Override
+    public Integer getRequiredArgSize() {
+        return 2;
     }
 
     @Override
     public String[] getAliases(){
-        return new String[] {"update"};
+        return new String[] {};
     }
 
 }

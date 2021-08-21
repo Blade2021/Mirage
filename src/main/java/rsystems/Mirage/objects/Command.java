@@ -30,6 +30,8 @@ public abstract class Command {
 
     public abstract String getHelp();
 
+    public abstract Integer getRequiredArgSize();
+
     public String getName(){
         return this.getClass().getSimpleName();
     };

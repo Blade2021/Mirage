@@ -115,7 +115,20 @@ public class Dispatcher extends ListenerAdapter {
 
                 try {
                     final String content = this.removePrefix(alias, prefix, message);
-                    c.dispatch(event.getAuthor(), event.getChannel(), event.getMessage(), content, event);
+
+                    String[] args = content.split("\\s+");
+                    if(args.length < c.getRequiredArgSize()) {
+                        if(c.getHelp() != null) {
+                            String returnString = c.getHelp();
+                            returnString = returnString.replaceAll("\\{prefix}", Config.get("prefix"));
+                            returnString = returnString.replaceAll("\\{command}",c.getName());
+                            event.getMessage().reply("** Not enough arguments supplied **\n\n" + returnString).queue();
+                        } else {
+                            event.getMessage().reply("** Not enough arguments supplied **").queue();
+                        }
+                    } else {
+                        c.dispatch(event.getAuthor(), event.getChannel(), event.getMessage(), content, event);
+                    }
 
                 } catch (final NumberFormatException numberFormatException) {
                     numberFormatException.printStackTrace();

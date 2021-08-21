@@ -104,7 +104,6 @@ public class ListToons extends Command {
 
         }
 
-        //sb.append("\n").append("| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |");
         sb.append("```");
 
         reply(event,sb.toString());
@@ -113,5 +112,10 @@ public class ListToons extends Command {
     @Override
     public String getHelp() {
         return null;
+    }
+
+    @Override
+    public Integer getRequiredArgSize() {
+        return 0;
     }
 }

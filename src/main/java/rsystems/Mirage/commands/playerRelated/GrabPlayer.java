@@ -29,76 +29,78 @@ public class GrabPlayer extends Command {
     @Override
     public void dispatch(User sender, MessageChannel channel, Message message, String content, GuildMessageReceivedEvent event) {
         Player player = MirageApplication.playerService.getPlayer(content);
-        EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle(player.getCharacterName())
 
+        if(player != null) {
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle(String.format("%s - %s", player.getCharacterName(), player.getRealmName()))
+                    .addField("Race", player.getRace(), true)
+                    .addField("Class", player.getPlayerClass(), true)
+                    .addField("Covenant", player.getCovenantName(), true)
+                    .addField("Guild", player.getGuildName(), true)
+                    .addField("Current Spec", player.getCurrentSpecName(), true)
+                    .addField("iLVL", player.getCharacterItemLevel().toString(), true);
 
+            StringBuilder sb = new StringBuilder();
+            for (Role role : player.getRoles()) {
+                sb.append(role.getName()).append("\n");
+            }
 
+            eb.addField("Role(s)", sb.toString(), true)
+                    .setThumbnail(player.getThumbnailURL());
 
-                /*.setDescription(String.format("Race: %s     Class: %s       Realm: %s\n" +
-                                "Guild: %s      Current Spec: %s        Covenant: %s",
-                                player.getRace(),player.getPlayerClass(),player.getRealmName(),player.getGuildName(),player.getCurrentSpecName(),player.getCovenantName()));
+            switch (player.getPlayerClass().toLowerCase()) {
+                case "priest":
+                    eb.setColor(Color.WHITE);
+                    break;
+                case "paladin":
+                    eb.setColor(Color.decode("#F48CBA"));
+                    break;
+                case "demon hunter":
+                    eb.setColor(Color.decode("#A330C9"));
+                    break;
+                case "warrior":
+                    eb.setColor(Color.decode("#C69B6D"));
+                    break;
+                case "druid":
+                    eb.setColor(Color.decode("#FF7C0A"));
+                    break;
+                case "hunter":
+                    eb.setColor(Color.decode("#AAD372"));
+                    break;
+                case "mage":
+                    eb.setColor(Color.decode("#3FC7EB"));
+                    break;
+                case "monk":
+                    eb.setColor(Color.decode("#00FF98"));
+                    break;
+                case "rogue":
+                    eb.setColor(Color.decode("#FFF468"));
+                    break;
+                case "shaman":
+                    eb.setColor(Color.decode("#0070DD"));
+                    break;
+                case "warlock":
+                    eb.setColor(Color.decode("#8788EE"));
+                    break;
 
-                */
-                .addField("Realm",player.getRealmName(),true)
-                .addField("Race",player.getRace(),true)
-                .addField("Class",player.getPlayerClass(),true)
-                .addField("Guild",player.getGuildName(),true)
-                .addField("Covenant",player.getCovenantName(),true)
-                .addField("Current Spec",player.getCurrentSpecName(),true)
-                .addField("iLVL",player.getCharacterItemLevel().toString(),true);
+            }
 
-                StringBuilder sb = new StringBuilder();
-                for(Role role:player.getRoles()){
-                    sb.append(role.getName()).append("\n");
-                }
-
-                eb.addField("Role(s)",sb.toString(),true)
-                .setThumbnail(player.getThumbnailURL());
-
-        switch(player.getPlayerClass().toLowerCase()){
-            case "priest":
-                eb.setColor(Color.WHITE);
-                break;
-            case "paladin":
-                eb.setColor(Color.decode("#F48CBA"));
-                break;
-            case "demon hunter":
-                eb.setColor(Color.decode("#A330C9"));
-                break;
-            case "warrior":
-                eb.setColor(Color.decode("#C69B6D"));
-                break;
-            case "druid":
-                eb.setColor(Color.decode("#FF7C0A"));
-                break;
-            case "hunter":
-                eb.setColor(Color.decode("#AAD372"));
-                break;
-            case "mage":
-                eb.setColor(Color.decode("#3FC7EB"));
-                break;
-            case "monk":
-                eb.setColor(Color.decode("#00FF98"));
-                break;
-            case "rogue":
-                eb.setColor(Color.decode("#FFF468"));
-                break;
-            case "shaman":
-                eb.setColor(Color.decode("#0070DD"));
-                break;
-            case "warlock":
-                eb.setColor(Color.decode("#8788EE"));
-                break;
-
+            reply(event, eb.build());
+            eb.clear();
+        } else {
+            reply(event, "Sorry that character is not registered yet.\n" +
+                    "If you are the owner, Use !register to register it for tracking");
         }
-
-        reply(event, eb.build());
-        eb.clear();
     }
 
     @Override
     public String getHelp() {
-        return null;
+        return "`{prefix}{command} [Character Name]`\n" +
+                "Get information about a character IF it is registered.";
+    }
+
+    @Override
+    public Integer getRequiredArgSize() {
+        return 1;
     }
 }

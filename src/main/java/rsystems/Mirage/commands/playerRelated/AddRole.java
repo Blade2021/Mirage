@@ -38,4 +38,9 @@ public class AddRole extends Command {
     public String getHelp() {
         return null;
     }
+
+    @Override
+    public Integer getRequiredArgSize() {
+        return 2;
+    }
 }
