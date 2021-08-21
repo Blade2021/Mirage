@@ -6,8 +6,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import rsystems.Mirage.Config;
-import rsystems.Mirage.commands.playerRelated.Profile;
-import rsystems.Mirage.commands.playerRelated.Verify;
+import rsystems.Mirage.commands.playerRelated.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +21,11 @@ public class Dispatcher extends ListenerAdapter {
 
     public Dispatcher() {
         this.registerCommand(new Verify());
-        this.registerCommand(new Profile());
+        this.registerCommand(new Register());
+        this.registerCommand(new GrabPlayer());
+        this.registerCommand(new AddRole());
+        this.registerCommand(new ListToons());
+        this.registerCommand(new RemovePlayer());
 
         for (Command c : commands) {
             System.out.println(c.getName());

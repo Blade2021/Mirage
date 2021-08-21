@@ -27,9 +27,16 @@ public class Player {
     private Long dUID;
     private String characterName;
     private String realmName;
-    private String characterClass;
-    private String characterSpec;
-    private int characterItemLevel;
+    private String region;
+    private String race;
+    private String playerClass;
+    private String currentSpecName;
+    private String profileURL;
+    private String covenantName;
+    private String guildName;
+    private String thumbnailURL;
+    private String lastUpdated;
+    private Integer characterItemLevel;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 

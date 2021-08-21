@@ -19,8 +19,10 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     public Player savePlayer(Player player) {
+
         return playerRepo.save(player);
     }
+
 
     @Override
     public Role saveRole(Role role) {
@@ -47,6 +49,11 @@ public class PlayerServiceImpl implements PlayerService{
     @Override
     public Player getPlayer(String characterName) {
         return playerRepo.findByCharacterName(characterName);
+    }
+
+    @Override
+    public Role getRole(String roleName) {
+        return roleRepo.findRoleByName(roleName);
     }
 
     @Override

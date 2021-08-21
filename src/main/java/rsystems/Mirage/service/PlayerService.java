@@ -17,6 +17,7 @@ public interface PlayerService {
 
     // Query
     Player getPlayer(String characterName);
+    Role getRole(String roleName);
     List<Player> getPlayersByUID(Long uid);
     List<Player> getPlayers();
 
