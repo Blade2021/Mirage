@@ -73,6 +73,22 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
+    public List<Player> getPlayersByGuild(String guildName) {
+        ArrayList<Player> players = (ArrayList<Player>) playerRepo.findAll();
+        Iterator it = players.iterator();
+        while(it.hasNext()){
+            Player player = (Player) it.next();
+
+            if(!player.getGuildName().toLowerCase().equals(guildName.toLowerCase())){
+                it.remove();
+            }
+        }
+
+        return players;
+    }
+
+
+    @Override
     public List<Player> getPlayers() {
         return playerRepo.findAll();
     }

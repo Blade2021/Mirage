@@ -19,6 +19,7 @@ public interface PlayerService {
     Player getPlayer(String characterName);
     Role getRole(String roleName);
     List<Player> getPlayersByUID(Long uid);
+    List<Player> getPlayersByGuild(String guildName);
     List<Player> getPlayers();
 
     // Deletion

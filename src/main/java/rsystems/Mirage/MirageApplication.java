@@ -13,12 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-import rsystems.Mirage.domain.Player;
-import rsystems.Mirage.domain.Role;
 import rsystems.Mirage.objects.Dispatcher;
 import rsystems.Mirage.service.PlayerService;
-import rsystems.Mirage.service.PlayerServiceImpl;
-import rsystems.Mirage.service.RaiderIO;
 
 import javax.security.auth.login.LoginException;
 
@@ -30,7 +26,6 @@ public class MirageApplication {
 	public static PlayerService playerService;
 	public static Dispatcher dispatcher;
 	public static RestTemplate restTemplate;
-	public static RaiderIO raiderIO;
 
 	public static void main(String[] args) throws LoginException {
 		SpringApplication.run(MirageApplication.class, args);

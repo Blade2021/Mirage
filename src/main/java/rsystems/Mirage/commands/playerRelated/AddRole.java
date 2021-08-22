@@ -36,7 +36,9 @@ public class AddRole extends Command {
 
     @Override
     public String getHelp() {
-        return null;
+        return "`{prefix}{command} [Character Name] [Role]`\n" +
+                "Register your character as a certain role.\n" +
+                "Available Roles: DPS, RDPS, Heal, Tank, Coach";
     }
 
     @Override

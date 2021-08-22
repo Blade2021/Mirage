@@ -2,11 +2,18 @@ plugins {
 	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id'com.github.johnrengelman.shadow' version '4.0.4'
+	id 'application'
 }
 
+
 group = 'rsystems'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = '0.0.3-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+mainClassName = 'rsystems.Mirage.MirageApplication'
 
 configurations {
 	compileOnly {
@@ -22,6 +29,22 @@ repositories {
 		url 'https://m2.dv8tion.net/releases'
 	}
 }
+
+import com.github.jengelman.gradle.plugins.shadow.transformers.*
+shadowJar {
+
+	// Required for Spring
+	mergeServiceFiles()
+	append 'META-INF/spring.handlers'
+	append 'META-INF/spring.schemas'
+	append 'META-INF/spring.tooling'
+	transform(PropertiesFileTransformer) {
+		paths = ['META-INF/spring.factories' ]
+		mergeStrategy = "append"
+	}
+
+}
+
 
 dependencies {
 	//Spring boot auto gen
@@ -42,6 +65,4 @@ dependencies {
 	implementation group: 'net.sf.trove4j', name: 'trove4j', version: '3.0.3'
 }
 
-test {
-	useJUnitPlatform()
-}
+compileJava.options.encoding = 'UTF-8'
