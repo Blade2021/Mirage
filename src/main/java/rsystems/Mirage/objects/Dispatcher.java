@@ -26,6 +26,7 @@ public class Dispatcher extends ListenerAdapter {
         this.registerCommand(new AddRole());
         this.registerCommand(new ListToons());
         this.registerCommand(new RemovePlayer());
+        this.registerCommand(new Update());
 
         for (Command c : commands) {
             System.out.println(c.getName());
