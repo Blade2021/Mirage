@@ -52,6 +52,7 @@ public class RaiderIO {
                         //System.out.println("iLVL = " + IOResponse.getGear().getItemLevelEquipped());
 
                         player.setCharacterItemLevel(IOResponse.getGear().getItemLevelEquipped());
+                        player.setLastUpdated(IOResponse.getLastCrawledAt());
                         player.setCurrentSpecName(IOResponse.getActiveSpecName());
                         player.setRegion(IOResponse.getRegion());
                         player.setRace(IOResponse.getRace());

@@ -12,6 +12,9 @@ import rsystems.Mirage.domain.Role;
 import rsystems.Mirage.objects.Command;
 
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class GrabPlayer extends Command {
 
@@ -39,6 +42,15 @@ public class GrabPlayer extends Command {
                     .addField("Guild", player.getGuildName(), true)
                     .addField("Current Spec", player.getCurrentSpecName(), true)
                     .addField("iLVL", player.getCharacterItemLevel().toString(), true);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yy H:m:s");
+            String dateTime = player.getLastUpdated().substring(0,player.getLastUpdated().indexOf("."));
+
+            LocalDateTime date = LocalDateTime.parse(dateTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String lastCrawled = formatter.format(date);
+
+            eb.setFooter("Last Crawled Datetime: " + lastCrawled);
+
 
             StringBuilder sb = new StringBuilder();
             for (Role role : player.getRoles()) {
