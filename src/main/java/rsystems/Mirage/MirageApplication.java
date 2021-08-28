@@ -38,7 +38,7 @@ public class MirageApplication {
 	public static RestTemplate restTemplate;
 	public static Map<String,PlayerInfoRequest> queue = new LinkedMap<>();
 
-	public static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
 	public static RaiderIORequestTask task;
 
 	public static void main(String[] args) throws LoginException {
@@ -59,6 +59,7 @@ public class MirageApplication {
 
 			api.addEventListener(dispatcher = new Dispatcher());
 
+			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 			executorService.scheduleWithFixedDelay(task = new RaiderIORequestTask(),10000,10000, TimeUnit.MILLISECONDS);
 
 		} catch (InterruptedException e) {
