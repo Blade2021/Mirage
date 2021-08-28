@@ -1,4 +1,5 @@
 package rsystems.Mirage.service;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import rsystems.Mirage.MirageApplication;
@@ -10,9 +11,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class RaiderIO {
+public class HandleRequest {
 
     public static void requestInfo(String characterName, String realm, Long uid) {
+
+        System.out.println("Started request for " + characterName);
 
         String uri = String.format("https://raider.io/api/v1/characters/profile?region=us&realm=%s&name=%s&fields=covenant,guild,gear", realm, characterName);
 
@@ -28,10 +31,8 @@ public class RaiderIO {
                     System.out.println(response.statusCode());
                     try {
 
-                        RaiderIOResponse IOResponse = responseObject(response.body());
+                        RaiderIOResponse IOResponse = HandleRequest.responseObject(response.body());
                         System.out.println(IOResponse.getGear().toString());
-
-                        //System.out.println(IOResponse.getGear().getItemLevelEquipped());
 
                         Player player;
                         if(MirageApplication.playerService.getPlayer(IOResponse.getName()) == null) {
@@ -48,9 +49,6 @@ public class RaiderIO {
                         player.setCovenantName(IOResponse.getCovenant().getName());
                         player.setGuildName(IOResponse.getGuild().getName());
                         player.setRealmName(IOResponse.getRealm());
-
-                        //System.out.println("iLVL = " + IOResponse.getGear().getItemLevelEquipped());
-
                         player.setCharacterItemLevel(IOResponse.getGear().getItemLevelEquipped());
                         player.setLastUpdated(IOResponse.getLastCrawledAt());
                         player.setCurrentSpecName(IOResponse.getActiveSpecName());
@@ -60,6 +58,9 @@ public class RaiderIO {
                         player.setThumbnailURL(IOResponse.getThumbnailUrl());
 
                         MirageApplication.playerService.savePlayer(player);
+
+                        MirageApplication.queue.remove(characterName);
+                        System.out.println("New Queue Size: " + MirageApplication.queue.size());
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
@@ -68,11 +69,9 @@ public class RaiderIO {
         //return IOResponse;
     }
 
-    private static RaiderIOResponse responseObject(String httpResponse) throws JsonProcessingException {
+    public static RaiderIOResponse responseObject(String httpResponse) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(httpResponse, RaiderIOResponse.class);
     }
-
 }
-

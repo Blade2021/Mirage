@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import rsystems.Mirage.MirageApplication;
 import rsystems.Mirage.domain.Player;
 import rsystems.Mirage.objects.Command;
-import rsystems.Mirage.service.RaiderIO;
+import rsystems.Mirage.objects.PlayerInfoRequest;
 
 public class Update extends Command {
     @Override
@@ -23,8 +23,13 @@ public class Update extends Command {
         if(MirageApplication.playerService.getPlayer(content) != null){
             player = MirageApplication.playerService.getPlayer(content);
             if(player.getDUID().equals(sender.getIdLong())){
-                RaiderIO.requestInfo(player.getCharacterName(),player.getRealmName().replace(" ",""),sender.getIdLong());
-                reply(event, "I've added your character to the update queue.");
+                PlayerInfoRequest request = new PlayerInfoRequest(player.getCharacterName(),player.getRealmName(),sender.getIdLong());
+                if(!MirageApplication.queue.containsKey(request.getChracterName())) {
+                    MirageApplication.queue.putIfAbsent(request.getChracterName(), request);
+                    reply(event, "I've added your character to the update queue.");
+                } else {
+                    reply(event, "That character is already in the queue");
+                }
             } else {
                 reply(event, "That character is not registered to you");
             }
